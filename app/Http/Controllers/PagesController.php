@@ -25,4 +25,9 @@ class PagesController extends Controller
     {
         return view('kategori');
     }
+
+    public function user()
+    {
+        return view('user');
+    }
 }

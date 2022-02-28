@@ -16,7 +16,7 @@
 
                 @if (Request::get('edit') != 'true')
                     <a href="{{ route('toko', ['edit' => 'true']) }}" class="inline-block">
-                        <x-button.warning>Edit</x-button.warning>
+                        <x-button.warning>Edit Toko</x-button.warning>
                     </a>
                 @else
                     <a href="{{ route('toko') }}">

@@ -14,4 +14,5 @@ Route::controller(PagesController::class)->group(function () {
     Route::get('/toko', 'toko')->name('toko');
     Route::get('/produk', 'produk')->name('produk');
     Route::get('/kategori', 'kategori')->name('kategori');
+    Route::get('/user', 'user')->name('user');
 });
