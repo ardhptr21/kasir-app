@@ -15,4 +15,14 @@ class PagesController extends Controller
     {
         return view('toko');
     }
+
+    public function produk()
+    {
+        return view('produk');
+    }
+
+    public function kategori()
+    {
+        return view('kategori');
+    }
 }

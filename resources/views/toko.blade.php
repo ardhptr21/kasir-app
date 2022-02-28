@@ -4,7 +4,7 @@
     <x-dashboard-title title="Toko" description="Kelola dan lihat informasi toko" />
     <div class="w-full">
         <div class="relative p-12 bg-white rounded-lg shadow-lg">
-            <form x-data="{edit: false}">
+            <form class="space-y-5">
                 <x-form.input is-edit="{{ Request::get('edit') == 'true' }}" autocomplete="off" name="name"
                     placeholder="Nama Toko" value="Toko Kelontong Ardhi" />
                 <x-form.input is-edit="{{ Request::get('edit') == 'true' }}" autocomplete="off" name="address"
@@ -15,7 +15,7 @@
                     placeholder="Pemilik Toko" value="Ardhi Putra" />
 
                 @if (Request::get('edit') != 'true')
-                    <a href="{{ route('toko', ['edit' => 'true']) }}">
+                    <a href="{{ route('toko', ['edit' => 'true']) }}" class="inline-block">
                         <x-button.warning>Edit</x-button.warning>
                     </a>
                 @else
