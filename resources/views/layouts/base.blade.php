@@ -17,7 +17,7 @@
         </aside>
         <div class="flex flex-col flex-1 flex-grow max-h-screen overflow-hidden">
             @include('layouts.partials.header')
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-200">
                 <div class="container px-6 py-8 mx-auto">
                     @yield('content')
                 </div>
