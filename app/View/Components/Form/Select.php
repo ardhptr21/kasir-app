@@ -4,10 +4,9 @@ namespace App\View\Components\Form;
 
 use Illuminate\View\Component;
 
-class Input extends Component
+class Select extends Component
 {
     public string $name;
-    public string $type;
     public string $value;
     public string $placeholder;
     public bool $isEdit;
@@ -17,10 +16,9 @@ class Input extends Component
      *
      * @return void
      */
-    public function __construct(string $placeholder, string $name = '',  bool $isEdit = true, string $type = "text", string $value = "",)
+    public function __construct(string $placeholder, string $name = '',  bool $isEdit = true, string $value = "",)
     {
         $this->name = $name;
-        $this->type = $type;
         $this->value = $value;
         $this->placeholder = $placeholder;
         $this->isEdit = $isEdit;
@@ -33,6 +31,6 @@ class Input extends Component
      */
     public function render()
     {
-        return view('components.form.input');
+        return view('components.form.select');
     }
 }
