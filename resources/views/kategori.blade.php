@@ -1,12 +1,20 @@
-@extends('layouts.base', ['title' => 'Produk'])
+@extends('layouts.base', ['title' => 'Kategori'])
 
 @section('content')
     <x-dashboard-title title="Produk" description="Lihat dan kelola produk" />
-    <div class="mb-5">
-        <div class="flex items-center justify-start w-full gap-3 mb-3">
-            <x-form.input name="search" placeholder="Tambah kategori" :is-edit="true" autocomplete="off" />
-            <x-button.primary>Tambah</x-button.primary>
-        </div>
+    @if (session('category_success'))
+        <x-alert.success closeable>{{ session('category_success') }}</x-alert.success>
+    @elseif (session('category_error'))
+        <x-alert.error closeable>{{ session('category_error') }}</x-alert.error>
+    @endif
+    <div class="my-5">
+        <form class="flex items-start justify-start w-full gap-3 mb-3" action="{{ route('category:store') }}"
+            method="POST">
+            @csrf
+            <x-form.input name="name" placeholder="Tambah kategori" :is-edit="true" autocomplete="off"
+                error="{{ $errors->first('name') }}" />
+            <x-button.primary type="submit">Tambah</x-button.primary>
+        </form>
         <x-form.input name="search" placeholder="Cari kategori" :is-edit="true" autocomplete="off" />
     </div>
     <x-table.container>
@@ -18,33 +26,18 @@
             <x-table.th>Aksi</x-table.th>
         </x-slot:head>
         <x-slot:body>
-            <tr>
-                <x-table.td>1</x-table.td>
-                <x-table.td>ATK</x-table.td>
-                <x-table.td>23</x-table.td>
-                <x-table.td>17 August 1945</x-table.td>
-                <x-table.td>
-                    <x-table.action-data detail-action="/" edit-action="/" remove-action="/" :with-detail="false" />
-                </x-table.td>
-            </tr>
-            <tr>
-                <x-table.td>2</x-table.td>
-                <x-table.td>Snack</x-table.td>
-                <x-table.td>10</x-table.td>
-                <x-table.td>21 April 2019</x-table.td>
-                <x-table.td>
-                    <x-table.action-data detail-action="/" edit-action="/" remove-action="/" :with-detail="false" />
-                </x-table.td>
-            </tr>
-            <tr>
-                <x-table.td>3</x-table.td>
-                <x-table.td>Buah</x-table.td>
-                <x-table.td>7</x-table.td>
-                <x-table.td>10 November 2020</x-table.td>
-                <x-table.td>
-                    <x-table.action-data detail-action="/" edit-action="/" remove-action="/" :with-detail="false" />
-                </x-table.td>
-            </tr>
+            @foreach ($categories as $category)
+                <tr>
+                    <x-table.td>{{ $loop->iteration }}</x-table.td>
+                    <x-table.td>{{ $category->name }}</x-table.td>
+                    <x-table.td>0</x-table.td>
+                    <x-table.td>{{ $category->created_at->format('j F Y') }}</x-table.td>
+                    <x-table.td>
+                        <x-table.action-data remove-action="{{ route('category:remove', ['category' => $category->id]) }}"
+                            :with-detail="false" :with-edit="false" />
+                    </x-table.td>
+                </tr>
+            @endforeach
         </x-slot:body>
     </x-table.container>
 @endsection

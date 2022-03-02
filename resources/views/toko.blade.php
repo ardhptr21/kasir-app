@@ -3,7 +3,7 @@
 @section('content')
     <x-dashboard-title title="Toko" description="Kelola dan lihat informasi toko" />
     <div class="w-full">
-        <div class="relative p-12 bg-white rounded-lg shadow-lg">
+        <div class="relative p-12 space-y-5 bg-white rounded-lg shadow-lg">
             <form class="space-y-5" method="POST" action="{{ route('shop:update') }}">
                 @csrf
                 @method('PUT')
@@ -33,6 +33,11 @@
                     <x-button.primary type="submit">Simpan</x-button.primary>
                 @endif
             </form>
+            @if (session('shop_success'))
+                <x-alert.success closeable>{{ session('shop_success') }}</x-alert.success>
+            @elseif (session('shop_error'))
+                <x-alert.error closeable>{{ session('shop_error') }}</x-alert.error>
+            @endif
         </div>
     </div>
 @endsection

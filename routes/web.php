@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 Route::controller(PagesController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/produk', 'produk')->name('produk');
-    Route::get('/kategori', 'kategori')->name('kategori');
     Route::get('/user', 'user')->name('user');
     Route::get('/users', 'users')->name('users');
 });
@@ -27,4 +27,16 @@ Route::controller(PagesController::class)->group(function () {
 Route::controller(ShopController::class)->prefix('/shop')->group(function () {
     Route::get('/', 'index')->name('shop:index');
     Route::put('/store', 'update')->name('shop:update');
+});
+
+/**----------------------------------------------
+ * Shop Routes
+ * Base Route: /category
+ * Description: Routes for category
+ *
+ *---------------------------------------------**/
+Route::controller(CategoryController::class)->prefix('/category')->group(function () {
+    Route::get('/', 'index')->name('category:index');
+    Route::post('/', 'store')->name('category:store');
+    Route::post('/{category}', 'remove')->name('category:remove');
 });

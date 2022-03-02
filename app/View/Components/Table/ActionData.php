@@ -10,17 +10,19 @@ class ActionData extends Component
     public string $editAction;
     public string $removeAction;
     public string $withDetail;
+    public string $withEdit;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $detailAction, string $editAction, string $removeAction, bool $withDetail = true)
+    public function __construct(string $detailAction = '', string $editAction = '', string $removeAction = '', bool $withEdit = true, bool $withDetail = true)
     {
         $this->detailAction = $detailAction;
         $this->editAction = $editAction;
         $this->removeAction = $removeAction;
         $this->withDetail = $withDetail;
+        $this->withEdit = $withEdit;
     }
 
     /**
