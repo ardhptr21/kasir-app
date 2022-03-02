@@ -1,9 +1,13 @@
 @if ($isEdit)
     <div class="space-y-2">
+        @if ($label)
+            <label for="{{ $name }}" class="font-bold text-indigo-600">{{ $label }}</label>
+        @endif
         <input type="{{ $type }}" @if ($name) name="{{ $name }}" @endif
             placeholder="{{ $placeholder }}"
-            class="w-full p-3 text-base border rounded-md outline-none focus-visible:shadow-none focus:border-indigo-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500"
-            {{ $attributes }} value="{{ $value }}" />
+            class="w-full p-3 text-base border rounded-md outline-none focus-visible:shadow-none focus:border-indigo-600 read-only:cursor-not-allowed read-only:bg-gray-200 read-only:text-gray-500"
+            @if ($label) id="{{ $name }}" @endif value="{{ $value }}"
+            {{ $attributes }} />
         @if ($error)
             <small class="inline-block text-red-500">* {{ $error }}</small>
         @endif

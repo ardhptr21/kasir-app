@@ -10,6 +10,7 @@ class Input extends Component
     public string $type;
     public string $value;
     public string $placeholder;
+    public string $label;
     public bool $isEdit;
     public string $error;
 
@@ -18,7 +19,7 @@ class Input extends Component
      *
      * @return void
      */
-    public function __construct(string $placeholder, string $error = '', string $name = '',  bool $isEdit = true, string $type = "text", string $value = "",)
+    public function __construct(string $placeholder, string $label = '', string $error = '', string $name = '',  bool $isEdit = true, string $type = "text", string $value = "",)
     {
         $this->name = $name;
         $this->type = $type;
@@ -26,6 +27,7 @@ class Input extends Component
         $this->placeholder = $placeholder;
         $this->isEdit = $isEdit;
         $this->error = $error;
+        $this->label = $label;
     }
 
     /**

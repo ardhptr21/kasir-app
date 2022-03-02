@@ -9,6 +9,7 @@ class Select extends Component
     public string $name;
     public string $value;
     public string $placeholder;
+    public string $label;
     public bool $isEdit;
 
     /**
@@ -16,12 +17,13 @@ class Select extends Component
      *
      * @return void
      */
-    public function __construct(string $placeholder, string $name = '',  bool $isEdit = true, string $value = "",)
+    public function __construct(string $placeholder, string $label = "", string $name = '',  bool $isEdit = true, string $value = "",)
     {
         $this->name = $name;
         $this->value = $value;
         $this->placeholder = $placeholder;
         $this->isEdit = $isEdit;
+        $this->label = $label;
     }
 
     /**

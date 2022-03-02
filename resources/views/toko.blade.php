@@ -4,10 +4,10 @@
     <x-dashboard-title title="Toko" description="Kelola dan lihat informasi toko" />
     <div class="w-full">
         <div class="relative p-12 space-y-5 bg-white rounded-lg shadow-lg">
-            <form class="space-y-5" method="POST" action="{{ route('shop:update') }}">
+            <form class="space-y-5" method="POST" action="{{ route('shop.update') }}">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" value="{{ $shop->id }}">
+                <input type="hidden" name="id" value="{{ $shop->id ?? 1 }}">
                 <x-form.input is-edit="{{ Request::get('edit') == 'true' }}" autocomplete="off" name="name"
                     placeholder="Nama Toko" value="{{ $shop->name ?? '' }}" error="{{ $errors->first('name') }}" />
                 <x-form.input is-edit="{{ Request::get('edit') == 'true' }}" autocomplete="off" name="address"
@@ -23,11 +23,11 @@
                     error="{{ $errors->first('owner') }}" />
 
                 @if (Request::get('edit') != 'true')
-                    <a href="{{ route('shop:index', ['edit' => 'true']) }}" class="inline-block">
+                    <a href="{{ route('shop.index', ['edit' => 'true']) }}" class="inline-block">
                         <x-button.warning>Edit Toko</x-button.warning>
                     </a>
                 @else
-                    <a href="{{ route('shop:index') }}">
+                    <a href="{{ route('shop.index') }}">
                         <x-button.secondary>Batal</x-button.secondary>
                     </a>
                     <x-button.primary type="submit">Simpan</x-button.primary>
