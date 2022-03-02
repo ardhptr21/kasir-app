@@ -1,6 +1,7 @@
 @if ($isEdit)
-    <input type="{{ $type }}" name="{{ $name }}" placeholder="{{ $placeholder }}"
-        class="w-full p-3 text-base border rounded-md outline-none focus-visible:shadow-none focus:border-indigo-600"
+    <input type="{{ $type }}" @if ($name) name="{{ $name }}" @endif
+        placeholder="{{ $placeholder }}"
+        class="w-full p-3 text-base border rounded-md outline-none focus-visible:shadow-none focus:border-indigo-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500"
         {{ $attributes }} value="{{ $value }}" />
 @else
     <div class="flex justify-between gap-5">

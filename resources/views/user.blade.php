@@ -7,14 +7,14 @@
 
             <h2 class="text-3xl font-bold">Profil Pengguna</h2>
 
-            <x-form.input :is-edit="Request::get('edit') == 'true'" name="name" placeholder="Nama" autocomplete="off"
-                value="Ardhi Putra" />
+            <x-form.input :is-edit="Request::get('edit') == 'true'" placeholder="Nama" autocomplete="off"
+                value="Ardhi Putra" disabled />
             <x-form.input :is-edit="Request::get('edit') == 'true'" type="email" name="email" placeholder="Email"
                 autocomplete="off" value="ardhi@gmail.com" />
             <x-form.input :is-edit="Request::get('edit') == 'true'" name="phone" placeholder="Telepon" autocomplete="off"
                 value="0912983981280" />
-            <x-form.input :is-edit="Request::get('edit') == 'true'" name="nik" placeholder="NIK" autocomplete="off"
-                value="2919282919102920" />
+            <x-form.input :is-edit="Request::get('edit') == 'true'" placeholder="NIK" autocomplete="off"
+                value="2919282919102920" disabled />
 
             @if (Request::get('edit') != 'true')
                 <a href="{{ route('user', ['edit' => 'true']) }}" class="block">
@@ -32,7 +32,7 @@
         <form style="flex: 1" class="w-full p-5 space-y-5 bg-white rounded-md">
             <h2 class="text-3xl font-bold">Ganti Password</h2>
 
-            <x-form.input name="username" placeholder="Username" autocomplete="off" :is-edit="true" />
+            <x-form.input placeholder="Username" autocomplete="off" :is-edit="true" disabled />
             <x-form.input type="password" name="password" placeholder="Password" autocomplete="off" :is-edit="true" />
             <x-button.primary class="w-full">Simpan</x-button.primary>
         </form>

@@ -30,4 +30,9 @@ class PagesController extends Controller
     {
         return view('user');
     }
+
+    public function users()
+    {
+        return view('users');
+    }
 }
