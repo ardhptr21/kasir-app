@@ -11,19 +11,21 @@ class Input extends Component
     public string $value;
     public string $placeholder;
     public bool $isEdit;
+    public string $error;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $placeholder, string $name = '',  bool $isEdit = true, string $type = "text", string $value = "",)
+    public function __construct(string $placeholder, string $error = '', string $name = '',  bool $isEdit = true, string $type = "text", string $value = "",)
     {
         $this->name = $name;
         $this->type = $type;
         $this->value = $value;
         $this->placeholder = $placeholder;
         $this->isEdit = $isEdit;
+        $this->error = $error;
     }
 
     /**
