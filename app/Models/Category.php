@@ -26,8 +26,8 @@ class Category extends Model
 
     public function scopeFilter(Builder $query, array $filters)
     {
-        $query->when($filters['name'] ?? false, function (Builder $query, $name) {
-            return $query->where('name', 'like', "%{$name}%");
+        $query->when($filters['category'] ?? false, function (Builder $query, $category) {
+            return $query->where('name', 'like', "%{$category}%");
         });
     }
 }

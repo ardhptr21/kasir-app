@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $filters = $request->only(['category']);
+        $categories = Category::filter($filters)->get();
         return view('kategori', compact('categories'));
     }
 

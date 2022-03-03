@@ -114,7 +114,7 @@
         </x-table.container>
     @else
         <x-alert.info>
-            Tidak ada data user
+            Tidak ada user tersedia
         </x-alert.info>
     @endif
 
