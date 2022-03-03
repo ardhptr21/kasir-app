@@ -2,6 +2,17 @@
 
 @section('content')
     <x-dashboard-title title="User - {{ $user->name }}" description="Kelola data diri pengguna" />
+
+    @if (session('users_success'))
+        <div class="mb-5">
+            <x-alert.success>{{ session('users_success') }}</x-alert.success>
+        </div>
+    @elseif (session('users_error'))
+        <div class="mb-5">
+            <x-alert.error>{{ session('users_error') }}</x-alert.error>
+        </div>
+    @endif
+
     <div class="flex items-start justify-center w-full gap-5">
         <form action="{{ route('users.update', ['user' => $user->id]) }}" class="w-full p-5 space-y-5 bg-white rounded-md"
             style="flex: 1.5" method="POST">
@@ -35,20 +46,17 @@
                     <x-button.primary class="w-full" type="submit">Simpan</x-button.primary>
                 </div>
             @endif
-
-            @if (session('users_success'))
-                <x-alert.success>{{ session('users_success') }}</x-alert.success>
-            @elseif (session('users_error'))
-                <x-alert.error>{{ session('users_error') }}</x-alert.error>
-            @endif
         </form>
-        <form style="flex: 1" class="w-full p-5 space-y-5 bg-white rounded-md">
+        <form style="flex: 1" class="w-full p-5 space-y-5 bg-white rounded-md" method="POST"
+            action="{{ route('users.change-password', [$user]) }}">
+            @csrf
+            @method('PUT')
             <h2 class="text-3xl font-bold">Ganti Password</h2>
-
-            <x-form.input placeholder="Username" autocomplete="off" value="{{ $user->username }}" :is-edit="true"
-                disabled />
-            <x-form.input type="password" name="password" placeholder="Password" autocomplete="off" :is-edit="true" />
-            <x-button.primary class="w-full">Simpan</x-button.primary>
+            <x-form.input placeholder="Username" name="username" autocomplete="off" value="{{ $user->username }}"
+                :is-edit="true" error="{{ $errors->first('username') }}" />
+            <x-form.input type="password" name="password" placeholder="Password" autocomplete="off" :is-edit="true"
+                error="{{ $errors->first('password') }}" />
+            <x-button.primary type="submit" class="w-full">Simpan</x-button.primary>
         </form>
     </div>
 @endsection

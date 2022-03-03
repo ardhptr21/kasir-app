@@ -60,3 +60,4 @@ Route::controller(CategoryController::class)->middleware('auth')->prefix('/categ
  *
  *---------------------------------------------**/
 Route::resource('/users', UserController::class)->middleware('auth')->except(['create', 'edit']);
+Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password');

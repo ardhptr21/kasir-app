@@ -22,15 +22,20 @@ class AuthController extends Controller
         $isLogged = Auth::attempt($validated);
 
         if ($isLogged) {
-            return to_route('index');
+            $request->session()->regenerate();
+            return redirect()->intended('/');
         }
 
         return back()->with('logged_error', 'Email atau password salah');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return to_route('auth.login');
     }
 }
