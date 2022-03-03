@@ -32,7 +32,7 @@
                         @csrf
                         <x-form.input label="Nama" name="name" placeholder="Nama user" autocomplete="off" />
                         <x-form.input label="Username" name="username" placeholder="Username"
-                            value="KSR{{ $users->last()->id + 1 ?? 1 }}" autocomplete="off" />
+                            value="KSR{{ $users?->last()?->id + 1 ?? 1 }}" autocomplete="off" />
                         <x-form.input type="email" label="Email" name="email" placeholder="Email user" autocomplete="off" />
                         <x-form.input type="telephone" label="Telepon" name="phone" placeholder="Telepon user"
                             autocomplete="off" />
@@ -57,8 +57,23 @@
             </div>
 
 
-            <div class="w-full">
-                <x-form.input name="search" placeholder="Cari user" autocomplete="off" />
+            <div class="flex items-start w-full gap-3">
+                <div class="" style="flex: 2.5">
+                    <x-form.input name="user" placeholder="Cari user" autocomplete="off"
+                        value="{{ Request::get('user') }}"
+                        @keyup.enter="addUrlSearchParams({key: $el.name, value: $el.value})" />
+                </div>
+                <div style="flex: 1">
+                    <x-form.select name="role" placeholder="PILIH ROLE"
+                        @change="addUrlSearchParams({key: $el.name, value: $el.value})">
+                        <option @selected(!Request::get('role')) value="">Semua</option>
+                        <option @selected(Request::get('role')=='user' ) value="user">User</option>
+                        <option @selected(Request::get('role')=='admin' ) value="admin">Admin</option>
+                    </x-form.select>
+                </div>
+                <a href="{{ route('users.index') }}">
+                    <x-button.secondary>Reset</x-button.secondary>
+                </a>
             </div>
         </div>
         @if ($errors->count() > 0)
@@ -68,38 +83,39 @@
                 @endforeach
             </ul>
         @endif
-
-        <div class="space-x-3">
-            <x-form.radio name="role" label="Semua" checked />
-            <x-form.radio name="role" label="Kasir" />
-            <x-form.radio name="role" label="Admin" />
-        </div>
     </div>
-    <x-table.container>
-        <x-slot:head>
-            <x-table.th>No</x-table.th>
-            <x-table.th>Nama</x-table.th>
-            <x-table.th>Username</x-table.th>
-            <x-table.th>Role</x-table.th>
-            <x-table.th>Aksi</x-table.th>
-        </x-slot:head>
-        <x-slot:body>
-            @foreach ($users as $user)
-                <tr>
-                    <x-table.td>{{ $loop->iteration }}</x-table.td>
-                    <x-table.td>{{ $user->name }}</x-table.td>
-                    <x-table.td>{{ $user->username }}</x-table.td>
-                    <x-table.td>
-                        <span
-                            class="px-3 py-1 font-bold text-white rounded-xl {{ $user->role == 'user' ? 'bg-emerald-500' : 'bg-lime-500' }}">{{ str($user->role)->title }}</span>
-                    </x-table.td>
-                    <x-table.td>
-                        <x-table.action-data detail-action="{{ route('users.show', ['user' => $user->id]) }}"
-                            edit-action="{{ route('users.show', ['user' => $user->id, 'edit' => 'true']) }}"
-                            remove-action="{{ route('users.destroy', ['user' => $user->id]) }}" />
-                    </x-table.td>
-                </tr>
-            @endforeach
-        </x-slot:body>
-    </x-table.container>
+    @if ($users->isNotEmpty())
+        <x-table.container>
+            <x-slot:head>
+                <x-table.th>No</x-table.th>
+                <x-table.th>Nama</x-table.th>
+                <x-table.th>Username</x-table.th>
+                <x-table.th>Role</x-table.th>
+                <x-table.th>Aksi</x-table.th>
+            </x-slot:head>
+            <x-slot:body>
+                @foreach ($users as $user)
+                    <tr>
+                        <x-table.td>{{ $loop->iteration }}</x-table.td>
+                        <x-table.td>{{ $user->name }}</x-table.td>
+                        <x-table.td>{{ $user->username }}</x-table.td>
+                        <x-table.td>
+                            <span
+                                class="px-3 py-1 font-bold text-white rounded-xl {{ $user->role == 'user' ? 'bg-emerald-500' : 'bg-lime-500' }}">{{ str($user->role)->title }}</span>
+                        </x-table.td>
+                        <x-table.td>
+                            <x-table.action-data detail-action="{{ route('users.show', ['user' => $user->id]) }}"
+                                edit-action="{{ route('users.show', ['user' => $user->id, 'edit' => 'true']) }}"
+                                remove-action="{{ route('users.destroy', ['user' => $user->id]) }}" />
+                        </x-table.td>
+                    </tr>
+                @endforeach
+            </x-slot:body>
+        </x-table.container>
+    @else
+        <x-alert.info>
+            Tidak ada data user
+        </x-alert.info>
+    @endif
+
 @endsection

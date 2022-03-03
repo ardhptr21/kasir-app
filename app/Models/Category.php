@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 
 class Category extends Model
 {
@@ -21,5 +22,12 @@ class Category extends Model
                 'unique' => true,
             ]
         ];
+    }
+
+    public function scopeFilter(Builder $query, array $filters)
+    {
+        $query->when($filters['name'] ?? false, function (Builder $query, $name) {
+            return $query->where('name', 'like', "%{$name}%");
+        });
     }
 }

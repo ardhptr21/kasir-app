@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $filters = $request->only(['user', 'role']);
+        $users = User::filter($filters)->get();
         return view('users.index', compact('users'));
     }
 

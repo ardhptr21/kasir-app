@@ -15,7 +15,15 @@
                 error="{{ $errors->first('name') }}" />
             <x-button.primary type="submit">Tambah</x-button.primary>
         </form>
-        <x-form.input name="search" placeholder="Cari kategori" :is-edit="true" autocomplete="off" />
+        <div class="flex items-center justify-center gap-3">
+            <input type="text" name="category"
+                class="w-full p-3 text-base border rounded-md outline-none focus-visible:shadow-none focus:border-indigo-600"
+                placeholder="Cari kategori" autocomplete="off" x-data
+                @keyup.enter="if($el.value !== '') addUrlSearchParams({key: $el.name, value: $el.value})">
+            <a href="{{ route('users.index') }}">
+                <x-button.secondary>Reset</x-button.secondary>
+            </a>
+        </div>
     </div>
     <x-table.container>
         <x-slot:head>
