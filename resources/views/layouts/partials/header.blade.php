@@ -8,5 +8,7 @@
         </div>
     </div>
 
-    <x-button.primary>Logout</x-button.primary>
+    <a href="{{ route('auth.logout') }}">
+        <x-button.primary>Logout</x-button.primary>
+    </a>
 </header>

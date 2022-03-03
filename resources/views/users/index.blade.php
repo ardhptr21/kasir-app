@@ -32,7 +32,7 @@
                         @csrf
                         <x-form.input label="Nama" name="name" placeholder="Nama user" autocomplete="off" />
                         <x-form.input label="Username" name="username" placeholder="Username"
-                            value="KSR{{ $users->last()->id + 1 ?? 1 }}" readonly autocomplete="off" />
+                            value="KSR{{ $users->last()->id + 1 ?? 1 }}" autocomplete="off" />
                         <x-form.input type="email" label="Email" name="email" placeholder="Email user" autocomplete="off" />
                         <x-form.input type="telephone" label="Telepon" name="phone" placeholder="Telepon user"
                             autocomplete="off" />
@@ -57,7 +57,9 @@
             </div>
 
 
-            <x-form.input name="search" placeholder="Cari user" autocomplete="off" />
+            <div class="w-full">
+                <x-form.input name="search" placeholder="Cari user" autocomplete="off" />
+            </div>
         </div>
         @if ($errors->count() > 0)
             <ul class="inline-block p-5 text-white bg-red-500 rounded-md">
@@ -92,7 +94,8 @@
                             class="px-3 py-1 font-bold text-white rounded-xl {{ $user->role == 'user' ? 'bg-emerald-500' : 'bg-lime-500' }}">{{ str($user->role)->title }}</span>
                     </x-table.td>
                     <x-table.td>
-                        <x-table.action-data detail-action="/" edit-action="/"
+                        <x-table.action-data detail-action="{{ route('users.show', ['user' => $user->id]) }}"
+                            edit-action="{{ route('users.show', ['user' => $user->id, 'edit' => 'true']) }}"
                             remove-action="{{ route('users.destroy', ['user' => $user->id]) }}" />
                     </x-table.td>
                 </tr>

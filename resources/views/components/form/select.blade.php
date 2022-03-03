@@ -13,9 +13,9 @@
 @else
     <div class="flex justify-between gap-5">
         <div class="flex items-center justify-between font-bold" style="flex: 0.5">
-            <h3>{{ $placeholder }}</h3>
+            <h3>{{ explode(' ', str($placeholder)->title)[1] }}</h3>
             <span>:</span>
         </div>
-        <p style="flex: 2">{{ $value }}</p>
+        <p style="flex: 2">{{ str($value)->title }}</p>
     </div>
 @endif

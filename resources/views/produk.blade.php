@@ -43,8 +43,9 @@
             </div>
         </div>
 
-
-        <x-form.input name="search" placeholder="Cari produk" :is-edit="true" autocomplete="off" />
+        <div class="w-full">
+            <x-form.input name="search" placeholder="Cari produk" :is-edit="true" autocomplete="off" />
+        </div>
     </div>
 
     <x-table.container>

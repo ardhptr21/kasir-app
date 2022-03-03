@@ -54,18 +54,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -77,7 +66,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'required|string|max:255',
+            'nik' => 'required|numeric|digits:16',
+            'role' => 'required|string',
+        ]);
+
+        $updated = $user->update($validated);
+
+        if ($updated) {
+            return to_route('users.show', $user)->with('users_success', "User $user->name berhasil diupdate");
+        }
+
+        return to_route('users.show', $user)->with('users_error', "User $user->name gagal diupdate");
     }
 
     /**

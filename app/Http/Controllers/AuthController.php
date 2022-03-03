@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
+{
+    public function login()
+    {
+        return view('auth.login');
+    }
+
+    public function logged(Request $request)
+    {
+        $validated = $this->validate($request, [
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $isLogged = Auth::attempt($validated);
+
+        if ($isLogged) {
+            return to_route('index');
+        }
+
+        return back()->with('logged_error', 'Email atau password salah');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return to_route('auth.login');
+    }
+}
