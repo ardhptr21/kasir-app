@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,13 +40,26 @@ class User extends Authenticatable
     {
 
         $query->when($filters['user'] ?? false, function (Builder $query, string $user) {
-            return $query->where('name', 'like', "%{$user}%")
-                ->orWhere('username', 'like', "%{$user}%")
-                ->orWhere('email', 'like', "%{$user}%");
+            $query->where(function (Builder $query) use ($user) {
+                $query
+                    ->where('name', 'like', "%$user%")
+                    ->orWhere('username', 'like', "%$user%")
+                    ->orWhere('email', 'like', "%$user%");
+            });
         });
 
         $query->when($filters['role'] ?? false, function (Builder $query, string $role) {
-            return $query->where('role', $role);
+            $query->where('role', $role);
         });
+    }
+
+    public function isAdmin()
+    {
+        return $this->role == 'admin';
+    }
+
+    public function isOwner()
+    {
+        return $this->role == 'owner';
     }
 }

@@ -27,7 +27,7 @@ Route::controller(AuthController::class)->prefix('/auth')->middleware('guest')->
  *---------------------------------------------**/
 Route::controller(PagesController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/produk', 'produk')->name('produk');
+    Route::get('/produk', 'produk')->name('produk')->can('admin');
 });
 
 /**----------------------------------------------
@@ -36,7 +36,7 @@ Route::controller(PagesController::class)->middleware('auth')->group(function ()
  * Description: Routes for shop
  *
  *---------------------------------------------**/
-Route::controller(ShopController::class)->middleware('auth')->prefix('/shop')->group(function () {
+Route::controller(ShopController::class)->middleware(['auth', 'can:owner'])->prefix('/shop')->group(function () {
     Route::get('/', 'index')->name('shop.index');
     Route::put('/store', 'update')->name('shop.update');
 });
@@ -47,7 +47,7 @@ Route::controller(ShopController::class)->middleware('auth')->prefix('/shop')->g
  * Description: Routes for category
  *
  *---------------------------------------------**/
-Route::controller(CategoryController::class)->middleware('auth')->prefix('/category')->group(function () {
+Route::controller(CategoryController::class)->middleware(['auth', 'can:admin'])->prefix('/category')->group(function () {
     Route::get('/', 'index')->name('category.index');
     Route::post('/', 'store')->name('category.store');
     Route::delete('/{category}', 'remove')->name('category.remove');
@@ -59,5 +59,5 @@ Route::controller(CategoryController::class)->middleware('auth')->prefix('/categ
  * Description: Routes for users
  *
  *---------------------------------------------**/
-Route::resource('/users', UserController::class)->middleware('auth')->except(['create', 'edit']);
-Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password');
+Route::resource('/users', UserController::class)->middleware(['auth', 'can:owner'])->except(['create', 'edit']);
+Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password')->can('owner');

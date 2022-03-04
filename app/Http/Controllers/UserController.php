@@ -10,7 +10,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['user', 'role']);
-        $users = User::filter($filters)->get();
+        $users = User::filter($filters)->where('role', '!=', 'owner')->get();
         return view('users.index', compact('users'));
     }
 
