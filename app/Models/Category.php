@@ -30,4 +30,9 @@ class Category extends Model
             return $query->where('name', 'like', "%{$category}%");
         });
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 }

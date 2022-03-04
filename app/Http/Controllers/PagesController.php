@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
     public function index()
     {
-        return view('index');
-    }
-
-    public function produk()
-    {
-        return view('produk');
+        $categoriesCount = Category::count();
+        $servicesCount = Service::count();
+        return view('index', compact('categoriesCount', 'servicesCount'));
     }
 
     public function user()

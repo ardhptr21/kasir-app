@@ -91,6 +91,7 @@
                 <x-table.th>Nama</x-table.th>
                 <x-table.th>Username</x-table.th>
                 <x-table.th>Role</x-table.th>
+                <x-table.th>Ditambahkan pada</x-table.th>
                 <x-table.th>Aksi</x-table.th>
             </x-slot:head>
             <x-slot:body>
@@ -103,6 +104,7 @@
                             <span
                                 class="px-3 py-1 font-bold text-white rounded-xl {{ $user->role == 'user' ? 'bg-emerald-500' : 'bg-lime-500' }}">{{ str($user->role)->title }}</span>
                         </x-table.td>
+                        <x-table.td>{{ $user->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
                             <x-table.action-data detail-action="{{ route('users.show', ['user' => $user->id]) }}"
                                 edit-action="{{ route('users.show', ['user' => $user->id, 'edit' => 'true']) }}"

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,15 @@ Route::controller(AuthController::class)->prefix('/auth')->middleware('guest')->
 Route::controller(PagesController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/user', 'user')->name('user');
-    Route::get('/produk', 'produk')->name('produk')->can('admin');
 });
+
+/**----------------------------------------------
+ * Service Routes
+ * Base Route: /service
+ * Description: Routes for the service
+ *
+ *---------------------------------------------**/
+Route::resource('/service', ServiceController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create']);
 
 /**----------------------------------------------
  * Shop Routes

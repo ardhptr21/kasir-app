@@ -28,8 +28,8 @@
                 value="{{ $user->phone }}" error="{{ $errors->first('phone') }}" label="Telepon" />
             <x-form.input :is-edit="Request::get('edit') == 'true'" placeholder="NIK" name="nik" autocomplete="off"
                 value="{{ $user->nik }}" error="{{ $errors->first('nik') }}" label="NIK" />
-            <x-form.select placeholder="PILIH KATEGORI" name="role" :is-edit="Request::get('edit') == 'true'"
-                value="{{ $user->role }}" label="Kategori">
+            <x-form.select placeholder="PILIH ROLE" name="role" :is-edit="Request::get('edit') == 'true'"
+                value="{{ $user->role }}" label="Role">
                 <option @selected($user->role == 'user') value="user">User</option>
                 <option @selected($user->role == 'admin') value="admin">Admin</option>
             </x-form.select>
