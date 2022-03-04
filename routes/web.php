@@ -27,6 +27,7 @@ Route::controller(AuthController::class)->prefix('/auth')->middleware('guest')->
  *---------------------------------------------**/
 Route::controller(PagesController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('index');
+    Route::get('/user', 'user')->name('user');
     Route::get('/produk', 'produk')->name('produk')->can('admin');
 });
 
@@ -59,5 +60,5 @@ Route::controller(CategoryController::class)->middleware(['auth', 'can:admin'])-
  * Description: Routes for users
  *
  *---------------------------------------------**/
-Route::resource('/users', UserController::class)->middleware(['auth', 'can:owner'])->except(['create', 'edit']);
-Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password')->can('owner');
+Route::resource('/users', UserController::class)->middleware('auth')->except(['create', 'edit']);
+Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password');

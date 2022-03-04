@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:owner')->except(['update', 'changePassword']);
+    }
+
     public function index(Request $request)
     {
         $filters = $request->only(['user', 'role']);
@@ -44,19 +49,25 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'phone' => 'required|string|max:255',
-            'nik' => 'required|numeric|digits:16',
-            'role' => 'required|string',
+            'nik' => 'numeric|digits:16',
+            'role' => 'string',
         ]);
 
         $updated = $user->update($validated);
 
         if ($updated) {
+            if ($request->get('ref') == 'user') {
+                return to_route('user')->with('users_success', "User $user->name berhasil diupdate");
+            }
             return to_route('users.show', $user)->with('users_success', "User $user->name berhasil diupdate");
         }
 
+        if ($request->get('ref') == 'user') {
+            return to_route('user')->with('users_error', "User $user->name gagal diupdate");
+        }
         return to_route('users.show', $user)->with('users_error', "User $user->name gagal diupdate");
     }
 
@@ -74,17 +85,24 @@ class UserController extends Controller
     public function changePassword(Request $request, User $user)
     {
         $validated = $request->validate([
-            'username' => 'required|string|max:255',
+            'username' => 'string|max:255',
             'password' => 'required|string',
         ]);
+
         $validated['password'] = bcrypt($request->password);
 
         $updated = $user->update($validated);
 
         if ($updated) {
+            if ($request->get('ref') == 'user') {
+                return to_route('user')->with('users_success', "Credential user $user->name berhasil diupdate");
+            }
             return to_route('users.show', $user)->with('users_success', "Credential user $user->name berhasil diupdate");
         }
 
+        if ($request->get('ref') == 'user') {
+            return to_route('user')->with('users_error', "Credential user $user->name gagal diupdate");
+        }
         return to_route('users.show', $user)->with('users_error', "Credential user $user->name gagal diupdate");
     }
 }

@@ -21,15 +21,15 @@
             <h2 class="text-3xl font-bold">Profil Pengguna</h2>
 
             <x-form.input :is-edit="Request::get('edit') == 'true'" placeholder="Nama" name="name" autocomplete="off"
-                value="{{ $user->name }}" error="{{ $errors->first('name') }}" />
+                value="{{ $user->name }}" error="{{ $errors->first('name') }}" label="Nama" />
             <x-form.input :is-edit="Request::get('edit') == 'true'" type="email" name="email" placeholder="Email"
-                autocomplete="off" value="{{ $user->email }}" error="{{ $errors->first('email') }}" />
+                autocomplete="off" value="{{ $user->email }}" error="{{ $errors->first('email') }}" label="Email" />
             <x-form.input :is-edit="Request::get('edit') == 'true'" name="phone" placeholder="Telepon" autocomplete="off"
-                value="{{ $user->phone }}" error="{{ $errors->first('phone') }}" />
+                value="{{ $user->phone }}" error="{{ $errors->first('phone') }}" label="Telepon" />
             <x-form.input :is-edit="Request::get('edit') == 'true'" placeholder="NIK" name="nik" autocomplete="off"
-                value="{{ $user->nik }}" error="{{ $errors->first('nik') }}" />
+                value="{{ $user->nik }}" error="{{ $errors->first('nik') }}" label="NIK" />
             <x-form.select placeholder="PILIH KATEGORI" name="role" :is-edit="Request::get('edit') == 'true'"
-                value="{{ $user->role }}">
+                value="{{ $user->role }}" label="Kategori">
                 <option @selected($user->role == 'user') value="user">User</option>
                 <option @selected($user->role == 'admin') value="admin">Admin</option>
             </x-form.select>
@@ -53,10 +53,10 @@
             @method('PUT')
             <h2 class="text-3xl font-bold">Ganti Password</h2>
             <x-form.input placeholder="Username" name="username" autocomplete="off" value="{{ $user->username }}"
-                :is-edit="true" error="{{ $errors->first('username') }}" />
-            <x-form.input type="password" name="password" placeholder="Password" autocomplete="off" :is-edit="true"
-                error="{{ $errors->first('password') }}" />
-            <x-button.primary type="submit" class="w-full">Simpan</x-button.primary>
+                :is-edit="true" error="{{ $errors->first('username') }}" label="Username" />
+            <x-form.input type="password" name="password" placeholder="Masukkan password baru" autocomplete="off"
+                :is-edit="true" error="{{ $errors->first('password') }}" label="Password" />
+            <x-button.primary type="submit" class="w-full" label="Password">Simpan</x-button.primary>
         </form>
     </div>
 @endsection

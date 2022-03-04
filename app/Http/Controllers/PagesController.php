@@ -11,28 +11,13 @@ class PagesController extends Controller
         return view('index');
     }
 
-    public function toko()
-    {
-        return view('toko');
-    }
-
     public function produk()
     {
         return view('produk');
     }
 
-    public function kategori()
-    {
-        return view('kategori');
-    }
-
     public function user()
     {
         return view('user');
-    }
-
-    public function users()
-    {
-        return view('users');
     }
 }
