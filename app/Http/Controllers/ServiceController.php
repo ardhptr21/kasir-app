@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only(['category', 'service']);
+        $services = Service::with('category')->filter($filters)->get();
         $categories = Category::all();
-        $services = Service::with('category')->get();
         return view('service.index', compact('categories', 'services'));
     }
 

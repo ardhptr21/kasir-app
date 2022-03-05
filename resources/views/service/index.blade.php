@@ -55,9 +55,27 @@
             </div>
         </div>
 
-        <div class="w-full">
-            <x-form.input name="search" placeholder="Cari service" :is-edit="true" autocomplete="off" />
+        <div class="w-full" style="flex: 2">
+            <x-form.input name="service" placeholder="Cari service" :is-edit="true" autocomplete="off"
+                value="{{ Request::get('service') ?? '' }}"
+                @keyup.enter="addUrlSearchParams({key: $el.name, value: $el.value})" />
         </div>
+
+        <div class="w-full" style="flex: 1">
+            <x-form.select placeholder="PILIH KATEGORI" name="category"
+                @change="addUrlSearchParams({key: $el.name, value: $el.value})">
+
+                <option value="" selected>Semua</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->name }}" @selected(Request::get('category')==$category->
+                        name)>{{ $category->name }}</option>
+                @endforeach
+            </x-form.select>
+        </div>
+
+        <a href="{{ route('service.index') }}">
+            <x-button.secondary>Reset</x-button.secondary>
+        </a>
     </div>
     @if ($errors->count() > 0)
         <ul class="inline-block p-5 mb-5 text-white bg-red-500 rounded-md">
