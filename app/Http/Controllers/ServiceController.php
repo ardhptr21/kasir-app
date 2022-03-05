@@ -13,7 +13,7 @@ class ServiceController extends Controller
         $filters = $request->only(['category', 'service']);
         $services = Service::with('category')->filter($filters)->get();
         $categories = Category::all();
-        return view('service.index', compact('categories', 'services'));
+        return view('services.index', compact('categories', 'services'));
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         $categories = Category::all();
-        return view('service.edit', compact('service', 'categories'));
+        return view('services.edit', compact('service', 'categories'));
     }
 
     public function update(Request $request, Service $service)

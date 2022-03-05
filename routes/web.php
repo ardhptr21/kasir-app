@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ShopController;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 /**----------------------------------------------
  * Auth Routes
- * Base Route: /
+ * Base Route: /auth
  * Description: Routes for handle authentication
  *
  *---------------------------------------------**/
@@ -33,11 +34,11 @@ Route::controller(PagesController::class)->middleware('auth')->group(function ()
 
 /**----------------------------------------------
  * Service Routes
- * Base Route: /service
+ * Base Route: /services
  * Description: Routes for the service
  *
  *---------------------------------------------**/
-Route::resource('/service', ServiceController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create']);
+Route::resource('/services', ServiceController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create']);
 
 /**----------------------------------------------
  * Shop Routes
@@ -63,10 +64,18 @@ Route::controller(CategoryController::class)->middleware(['auth', 'can:admin'])-
 });
 
 /**----------------------------------------------
- * Shop Routes
+ * User Routes
  * Base Route: /users
  * Description: Routes for users
  *
  *---------------------------------------------**/
 Route::resource('/users', UserController::class)->middleware('auth')->except(['create', 'edit']);
 Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password');
+
+/**----------------------------------------------
+ * Member Routes
+ * Base Route: /members
+ * Description: Routes for members
+ *
+ *---------------------------------------------**/
+Route::resource('/members', MemberController::class)->middleware(['auth', 'can:admin'])->except(['create', 'edit']);

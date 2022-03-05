@@ -1,18 +1,18 @@
-@extends('layouts.base', ['title' => 'Services'])
+@extends('layouts.base', ['title' => 'Members'])
 
 @section('content')
-    <x-dashboard-title title="Produk" description="Lihat dan kelola produk" />
+    <x-dashboard-title title="Members" description="Lihat dan kelola semua member" />
 
-    @if (session('service_success'))
+    @if (session('member_success'))
         <div class="mb-5">
             <x-alert.success>
-                {{ session('service_success') }}
+                {{ session('member_success') }}
             </x-alert.success>
         </div>
-    @elseif (session('service_error'))
+    @elseif (session('member_error'))
         <div class="mb-5">
             <x-alert.error>
-                {{ session('service_error') }}
+                {{ session('member_error') }}
             </x-alert.error>
         </div>
     @endif
@@ -35,15 +35,11 @@
                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                 x-transition:leave-end="opacity-0 scale-90 translate-y-1">
 
-                <form class="space-y-5" action="{{ route('service.store') }}" method="POST" autocomplete="off">
+                <form class="space-y-5" action="{{ route('members.store') }}" method="POST" autocomplete="off">
                     @csrf
-                    <x-form.input label="Nama" name="name" placeholder="Nama service" />
-                    <x-form.select placeholder="PILIH KATEGORI" name="category_id" label="Kategori">
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </x-form.select>
-                    <x-form.input type="number" label="Harga" name="price" placeholder="Harga service" />
+                    <x-form.input label="Nama" name="name" placeholder="Nama member" />
+                    <x-form.input type="number" label="Telepon" name="phone" placeholder="Telepon member" />
+                    <x-form.textarea label="Alamat" name="address" placeholder="Alamat member" rows="8" />
 
                     <div class="mt-5 space-x-5 text-right">
                         <button type="submit"
@@ -56,24 +52,12 @@
         </div>
 
         <div class="w-full" style="flex: 2">
-            <x-form.input name="service" placeholder="Cari service" :is-edit="true" autocomplete="off"
-                value="{{ Request::get('service') ?? '' }}"
+            <x-form.input name="member" placeholder="Cari member" :is-edit="true" autocomplete="off"
+                value="{{ Request::get('member') ?? '' }}"
                 @keyup.enter="addUrlSearchParams({key: $el.name, value: $el.value})" />
         </div>
 
-        <div class="w-full" style="flex: 1">
-            <x-form.select placeholder="PILIH KATEGORI" name="category"
-                @change="addUrlSearchParams({key: $el.name, value: $el.value})">
-
-                <option value="" selected>Semua</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->name }}" @selected(Request::get('category')==$category->
-                        name)>{{ $category->name }}</option>
-                @endforeach
-            </x-form.select>
-        </div>
-
-        <a href="{{ route('service.index') }}">
+        <a href="{{ route('services.index') }}">
             <x-button.secondary>Reset</x-button.secondary>
         </a>
     </div>
@@ -85,28 +69,28 @@
         </ul>
     @endif
 
-    @if ($services->isNotEmpty())
+    @if ($members->isNotEmpty())
         <x-table.container>
             <x-slot:head>
                 <x-table.th>No</x-table.th>
                 <x-table.th>Nama</x-table.th>
-                <x-table.th>Kategori</x-table.th>
-                <x-table.th>Harga</x-table.th>
+                <x-table.th>Telepon</x-table.th>
+                <x-table.th>Kode</x-table.th>
                 <x-table.th>Ditambahkan Pada</x-table.th>
                 <x-table.th>Aksi</x-table.th>
             </x-slot:head>
             <x-slot:body>
-                @foreach ($services as $service)
+                @foreach ($members as $member)
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
-                        <x-table.td>{{ $service->name }}</x-table.td>
-                        <x-table.td>{{ $service->category->name }}</x-table.td>
-                        <x-table.td>Rp. {{ number_format($service->price, 2) }}</x-table.td>
-                        <x-table.td>{{ $service->created_at->format('j F Y') }}</x-table.td>
+                        <x-table.td>{{ $member->name }}</x-table.td>
+                        <x-table.td>{{ $member->phone }}</x-table.td>
+                        <x-table.td>{{ $member->member_code }}</x-table.td>
+                        <x-table.td>{{ $member->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
-                            <x-table.action-data :with-detail="false"
-                                edit-action="{{ route('service.edit', [$service]) }}"
-                                remove-action="{{ route('service.destroy', [$service]) }}" />
+                            <x-table.action-data :detail-action="route('members.show', [$member])"
+                                :edit-action="route('members.show', [$member,'edit' => 'true'])"
+                                :remove-action="route('members.destroy', [$member])" />
                         </x-table.td>
                     </tr>
                 @endforeach
@@ -114,7 +98,7 @@
         </x-table.container>
     @else
         <x-alert.info>
-            Tidak ada service yang tersedia saat ini
+            Tidak ada member yang tersedia saat ini
         </x-alert.info>
     @endif
 

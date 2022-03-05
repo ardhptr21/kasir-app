@@ -3,7 +3,7 @@
 @section('content')
     <x-dashboard-title title="Edit Service" description="Ubah service atau layanan yang ada" />
     <form class="w-full p-5 space-y-5 bg-white rounded-md" style="flex: 1.5" method="POST"
-        action="{{ route('service.update', [$service]) }}">
+        action="{{ route('services.update', [$service]) }}">
         @csrf
         @method('PUT')
         <x-form.input label="Nama" name="name" placeholder="Nama service" value="{{ $service->name }}"
@@ -30,7 +30,7 @@
         @endif
 
         <div class="flex items-center justify-center w-full gap-3">
-            <a href="{{ route('service.index') }}" class="block w-full">
+            <a href="{{ route('services.index') }}" class="block w-full">
                 <x-button.secondary class="w-full">Kembali</x-button.secondary>
             </a>
             <x-button.primary class="w-full" type="submit">Simpan</x-button.primary>
