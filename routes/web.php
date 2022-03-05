@@ -57,11 +57,7 @@ Route::controller(ShopController::class)->middleware(['auth', 'can:owner'])->pre
  * Description: Routes for category
  *
  *---------------------------------------------**/
-Route::controller(CategoryController::class)->middleware(['auth', 'can:admin'])->prefix('/category')->group(function () {
-    Route::get('/', 'index')->name('category.index');
-    Route::post('/', 'store')->name('category.store');
-    Route::delete('/{category}', 'remove')->name('category.remove');
-});
+Route::resource('/categories', CategoryController::class)->middleware(['auth', 'can:admin'])->only(['index', 'store', 'destroy']);
 
 /**----------------------------------------------
  * User Routes

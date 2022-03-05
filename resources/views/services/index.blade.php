@@ -1,7 +1,7 @@
 @extends('layouts.base', ['title' => 'Services'])
 
 @section('content')
-    <x-dashboard-title title="Produk" description="Lihat dan kelola produk" />
+    <x-dashboard-title title="Service" description="Lihat dan kelola service" />
 
     @if (session('service_success'))
         <div class="mb-5">

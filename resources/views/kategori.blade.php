@@ -8,7 +8,7 @@
         <x-alert.error closeable>{{ session('category_error') }}</x-alert.error>
     @endif
     <div class="my-5">
-        <form class="flex items-start justify-start w-full gap-3 mb-3" action="{{ route('category.store') }}"
+        <form class="flex items-start justify-start w-full gap-3 mb-3" action="{{ route('categories.store') }}"
             method="POST">
             @csrf
             <x-form.input name="name" placeholder="Tambah kategori" :is-edit="true" autocomplete="off"
@@ -45,7 +45,7 @@
                         <x-table.td>{{ $category->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
                             <x-table.action-data
-                                remove-action="{{ route('category.remove', ['category' => $category->id]) }}"
+                                remove-action="{{ route('categories.destroy', ['category' => $category->id]) }}"
                                 :with-detail="false" :with-edit="false" />
                         </x-table.td>
                     </tr>

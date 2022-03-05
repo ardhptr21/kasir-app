@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,5 +15,14 @@ class Member extends Model
     public function getRouteKeyName()
     {
         return 'member_code';
+    }
+
+    public function scopeFilter(Builder $query, array $filters)
+    {
+        $query->when($filters['member'] ?? false, function ($query, $member) {
+            return $query
+                ->where('member_code', $member)
+                ->orWhere('name', 'like', "%{$member}%");
+        });
     }
 }

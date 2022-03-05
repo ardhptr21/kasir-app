@@ -27,7 +27,7 @@ class CategoryController extends Controller
         return back()->with('category_error', "Kategori {$validated['name']} gagal dibuat");
     }
 
-    public function remove(Category $category)
+    public function destroy(Category $category)
     {
         $isDeleted = $category->delete();
 
