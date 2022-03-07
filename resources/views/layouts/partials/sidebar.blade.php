@@ -1,5 +1,7 @@
 <x-side-bar.container title="Dashboard">
     <x-side-bar.item name="Ringkasan" icon="fa-solid fa-bars-progress" link="{{ route('index') }}" />
+    <x-side-bar.item name="Buat Transaksi" icon="fa-solid fa-cash-register"
+        link="{{ route('transactions.create') }}" />
     <x-side-bar.item name="Anda" icon="fa-solid fa-user" link="{{ route('user') }}" />
     @can('admin')
         <x-side-bar.item name="Member" icon="fa-solid fa-user-check" link="{{ route('members.index') }}" />

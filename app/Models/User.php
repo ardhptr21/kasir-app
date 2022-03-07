@@ -62,4 +62,14 @@ class User extends Authenticatable
     {
         return $this->role == 'owner';
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

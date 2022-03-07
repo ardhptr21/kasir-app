@@ -17,3 +17,20 @@ function addUrlSearchParams(data) {
     }
     location.href = url.toString();
 }
+
+async function getServices(search, cb) {
+    if (search == "") {
+        cb();
+        return [];
+    }
+    const url = `/services?service=${search}&type=json`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.log(err);
+    } finally {
+        cb();
+    }
+}

@@ -29,4 +29,14 @@ class Service extends Model
             $query->where('name', 'like', "%{$service}%");
         });
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

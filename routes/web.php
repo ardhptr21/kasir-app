@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,3 +77,24 @@ Route::put('/users/{user}/change-password', [UserController::class, 'changePassw
  *
  *---------------------------------------------**/
 Route::resource('/members', MemberController::class)->middleware(['auth', 'can:admin'])->except(['create', 'edit']);
+
+/**----------------------------------------------
+ * Transactions Routes
+ * Base Route: /transactions
+ * Description: Routes for transactions
+ *
+ *---------------------------------------------**/
+Route::controller(TransactionController::class)->prefix('/transactions')->middleware('auth')->group(function () {
+    Route::get('/create', 'create')->name('transactions.create');
+    Route::get('/show', 'show')->name('transactions.show');
+    Route::post('/', 'store')->name('transactions.store');
+});
+
+/**----------------------------------------------
+ * Cart Routes
+ * Base Route: /cart
+ * Description: Routes for cart
+ *
+ *---------------------------------------------**/
+Route::resource('/cart', CartController::class)->middleware('auth')->only(['store', 'update', 'destroy']);
+Route::delete('/cart', [CartController::class, 'truncate'])->middleware('auth')->name('cart.truncate');

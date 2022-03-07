@@ -13,6 +13,9 @@ class ServiceController extends Controller
         $filters = $request->only(['category', 'service']);
         $services = Service::with('category')->filter($filters)->get();
         $categories = Category::all();
+        if ($request->get('type') == 'json') {
+            return response()->json($services);
+        }
         return view('services.index', compact('categories', 'services'));
     }
 
