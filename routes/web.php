@@ -89,6 +89,7 @@ Route::controller(TransactionController::class)->prefix('/transactions')->middle
     Route::post('/', 'store')->name('transactions.store');
     Route::get('/create', 'create')->name('transactions.create');
     Route::get('/show', 'show')->name('transactions.show');
+    Route::get('/export', 'export')->name('transactions.export');
 });
 
 /**----------------------------------------------

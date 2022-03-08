@@ -2,26 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransactionsExport;
 use App\Models\Cart;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
 {
 
     public function index(Request $request)
     {
+        if ($request->search != 'day' && $request->search != 'month' && isset($request->search)) {
+            return to_route('transactions.index');
+        }
+
         $filters = $request->only(['date', 'search']);
         if (!isset($filters['search']) || !isset($filters['date'])) {
             $filters['date'] = today();
             $filters['search'] = 'day';
         }
 
-        if ($filters['search'] != 'day' && $filters['search'] != 'month' && isset($filters['search'])) {
-            return to_route('transactions.create');
-        }
 
-        $transactions = Transaction::filter($filters)->get();
+        $transactions = Transaction::with(['service', 'user'])->filter($filters)->get();
         return view('transactions.index', compact('transactions'));
     }
 
@@ -72,5 +75,12 @@ class TransactionController extends Controller
         }
 
         return back()->with('cart_error', 'Transaksi gagal dilakukan');
+    }
+
+    public function export(Request $request)
+    {
+        $filters = $request->only(['date', 'search']);
+        $transactions = Transaction::with(['service', 'user'])->filter($filters)->get();
+        return Excel::download(new TransactionsExport($transactions), 'transactions.xlsx');
     }
 }
