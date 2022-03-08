@@ -4,13 +4,13 @@ namespace App\Exports;
 
 use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class TransactionsExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithColumnWidths
+class TransactionsExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize
 {
     public Collection $transactions;
 
@@ -49,18 +49,6 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
     {
         return [
             1    => ['font' => ['bold' => true]],
-        ];
-    }
-
-    public function columnWidths(): array
-    {
-        return [
-            'A' => 20,
-            'B' => 20,
-            'C' => 20,
-            'D' => 20,
-            'E' => 20,
-            'F' => 20,
         ];
     }
 }

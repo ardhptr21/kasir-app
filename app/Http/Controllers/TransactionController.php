@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\TransactionsExport;
 use App\Models\Cart;
 use App\Models\Transaction;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -81,6 +83,18 @@ class TransactionController extends Controller
     {
         $filters = $request->only(['date', 'search']);
         $transactions = Transaction::with(['service', 'user'])->filter($filters)->get();
-        return Excel::download(new TransactionsExport($transactions), 'transactions.xlsx');
+        $date = null;
+        if ($filters['search'] == 'day') {
+            $date = DateTime::createFromFormat('Y-m-d', $filters['date'])->getTimestamp();
+            $date = 'Hari ' . parse_day(date('N', $date)) . ' ' . date('j', $date) . ' ' . parse_month(date('n', $date)) . ' ' . date('Y', $date);
+        } else if ($filters['search'] == 'month') {
+            $date = DateTime::createFromFormat('m-Y', $filters['date']);
+            $date = 'Bulan ' . parse_month($date->format('n')) . ' ' . $date->format('Y');
+        }
+
+
+        $filename = 'Laporan Transaksi Pada ' . $date;
+
+        return Excel::download(new TransactionsExport($transactions), "$filename.xlsx");
     }
 }

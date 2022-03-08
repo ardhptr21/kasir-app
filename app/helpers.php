@@ -23,3 +23,50 @@ if (!function_exists('random_alnum')) {
         return $str . $num;
     }
 }
+
+if (!function_exists('parse_day')) {
+    function parse_day($day)
+    {
+        if ($day < 1 && $day > 7) {
+            return new Error('Invalid day');
+        }
+
+        $days = [
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+            5 => 'Jumat',
+            6 => 'Sabtu',
+            7 => 'Minggu',
+        ];
+
+        return $days[$day];
+    }
+}
+
+if (!function_exists('parse_month')) {
+    function parse_month($month)
+    {
+        if ($month < 1 && $month > 12) {
+            return new Error('Invalid month');
+        }
+
+        $months = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        return $months[$month];
+    }
+}
