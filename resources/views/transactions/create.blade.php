@@ -9,7 +9,7 @@
         <x-alert.error closeable>{{ session('cart_error') }}</x-alert.error>
     @endif
 
-    <div class="flex flex-row justify-between w-full gap-3 p-5 my-5 border-2 border-indigo-600 rounded-md"
+    <div class="flex flex-row justify-between w-full gap-3 p-5 my-5 bg-white rounded-md shadow-md"
         x-data="{services: [], loading: false}">
         <div class="w-96">
             <h2 class="mb-3 text-xl font-bold">Pencarian</h2>

@@ -85,9 +85,10 @@ Route::resource('/members', MemberController::class)->middleware(['auth', 'can:a
  *
  *---------------------------------------------**/
 Route::controller(TransactionController::class)->prefix('/transactions')->middleware('auth')->group(function () {
+    Route::get('/', 'index')->name('transactions.index');
+    Route::post('/', 'store')->name('transactions.store');
     Route::get('/create', 'create')->name('transactions.create');
     Route::get('/show', 'show')->name('transactions.show');
-    Route::post('/', 'store')->name('transactions.store');
 });
 
 /**----------------------------------------------

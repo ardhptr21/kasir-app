@@ -2,8 +2,8 @@
     <x-side-bar.item name="Ringkasan" icon="fa-solid fa-bars-progress" link="{{ route('index') }}" />
 
     <x-side-bar.dropdown-container name="Transaksi" icon="fa-solid fa-cash-register">
-        <x-side-bar.item name="Buat Transaksi" icon="fa-solid fa-receipt" link="{{ route('transactions.create') }}"
-            rounded />
+        <x-side-bar.item name="Laporan" icon="fa-solid fa-table" link="{{ route('transactions.index') }}" rounded />
+        <x-side-bar.item name="Buat" icon="fa-solid fa-receipt" link="{{ route('transactions.create') }}" rounded />
     </x-side-bar.dropdown-container>
     @can('admin')
         <x-side-bar.dropdown-container name="Data" icon="fa-solid fa-database">

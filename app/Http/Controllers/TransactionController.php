@@ -8,6 +8,24 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $filters = $request->only(['date', 'search']);
+        if (!isset($filters['search']) || !isset($filters['date'])) {
+            $filters['date'] = today();
+            $filters['search'] = 'day';
+        }
+
+        if ($filters['search'] != 'day' && $filters['search'] != 'month' && isset($filters['search'])) {
+            return to_route('transactions.create');
+        }
+
+        $transactions = Transaction::filter($filters)->get();
+        return view('transactions.index', compact('transactions'));
+    }
+
+
     public function create()
     {
         $carts = Cart::with(['service', 'user'])->get();
@@ -34,7 +52,9 @@ class TransactionController extends Controller
 
         $merger = ['transaction_code' => random_alnum(8), 'period' => date('m-Y'), 'user_id' => auth()->user()->id];
         $carts = array_map(function ($v) use ($merger) {
-            unset($v['created_at'], $v['updated_at'], $v['id']);
+            unset($v['id']);
+            $v['created_at'] = now();
+            $v['updated_at'] = now();
             return array_merge($v, $merger);
         }, Cart::all()->toArray());
 

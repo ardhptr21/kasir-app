@@ -1,5 +1,5 @@
 @if ($isEdit)
-    <div class="space-y-3">
+    <div class="w-full space-y-3">
         @if ($label)
             <label for="{{ $name }}" class="font-bold text-indigo-600">{{ $label }}</label>
         @endif
