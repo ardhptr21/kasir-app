@@ -535,6 +535,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-2 {
   margin-bottom: 0.5rem;
 }
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mt-3 {
+  margin-top: 0.75rem;
+}
 .ml-4 {
   margin-left: 1rem;
 }
@@ -555,15 +561,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .-mt-2 {
   margin-top: -0.5rem;
-}
-.mr-3 {
-  margin-right: 0.75rem;
-}
-.mr-2 {
-  margin-right: 0.5rem;
-}
-.mt-3 {
-  margin-top: 0.75rem;
 }
 .block {
   display: block;
@@ -804,6 +801,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-2 {
   border-width: 2px;
 }
+.border-t-2 {
+  border-top-width: 2px;
+}
 .border-b-2 {
   border-bottom-width: 2px;
 }
@@ -813,15 +813,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-b-4 {
   border-bottom-width: 4px;
 }
-.border-t {
-  border-top-width: 1px;
-}
-.border-t-2 {
-  border-top-width: 2px;
-}
 .border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 .border-red-300 {
   --tw-border-opacity: 1;
@@ -859,9 +857,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(79 70 229 / var(--tw-border-opacity));
 }
-.border-black {
+.border-gray-800 {
   --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
 }
 .bg-red-500 {
   --tw-bg-opacity: 1;
@@ -1230,6 +1228,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .read-only\:cursor-not-allowed:read-only {
   cursor: not-allowed;
 }
+.read-only\:border-none:-moz-read-only {
+  border-style: none;
+}
+.read-only\:border-none:read-only {
+  border-style: none;
+}
+.read-only\:bg-red-800:-moz-read-only {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+}
+.read-only\:bg-red-800:read-only {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+}
 .read-only\:bg-gray-200:-moz-read-only {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -1237,6 +1249,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .read-only\:bg-gray-200:read-only {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+.read-only\:bg-gray-300:-moz-read-only {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+.read-only\:bg-gray-300:read-only {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 .read-only\:text-gray-500:-moz-read-only {
   --tw-text-opacity: 1;
@@ -1297,6 +1317,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .focus\:border-indigo-600:focus {
   --tw-border-opacity: 1;
   border-color: rgb(79 70 229 / var(--tw-border-opacity));
+}
+.read-only\:focus\:border-none:focus:-moz-read-only {
+  border-style: none;
+}
+.read-only\:focus\:border-none:focus:read-only {
+  border-style: none;
+}
+.read-only\:focus\:border-inherit:focus:-moz-read-only {
+  border-color: inherit;
+}
+.read-only\:focus\:border-inherit:focus:read-only {
+  border-color: inherit;
 }
 .focus-visible\:shadow-none:focus-visible {
   --tw-shadow: 0 0 #0000;

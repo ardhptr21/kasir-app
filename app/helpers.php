@@ -70,3 +70,12 @@ if (!function_exists('parse_month')) {
         return $months[$month];
     }
 }
+
+if (!function_exists('sum_all_array_key')) {
+    function sum_all_array_key(array $array, string $key)
+    {
+        return array_reduce($array, function ($carry, $item) use ($key) {
+            return $carry + $item[$key];
+        }, 0);
+    }
+}

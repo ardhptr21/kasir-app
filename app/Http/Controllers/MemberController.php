@@ -65,4 +65,22 @@ class MemberController extends Controller
 
         return back()->with('member_error', 'Member gagal dihapus');
     }
+
+    public function check(Request $request)
+    {
+        $validated = $request->validate([
+            'member_code' => 'required|string',
+        ]);
+
+        $member = Member::where('member_code', $validated['member_code'])->first();
+
+
+
+        if ($member) {
+            $previousUrl = url()->previous() . '?member=' . $member->member_code;
+            return redirect($previousUrl)->with('cart_success', "Member dengan kode '$member->member_code' ditemukan");
+        }
+
+        return back()->with('cart_error', "Member dengan kode '$request->member_code' gagal ditemukan");
+    }
 }

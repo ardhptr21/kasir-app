@@ -76,6 +76,7 @@
                 <x-table.th>Nama</x-table.th>
                 <x-table.th>Telepon</x-table.th>
                 <x-table.th>Kode</x-table.th>
+                <x-table.th>Point</x-table.th>
                 <x-table.th>Ditambahkan Pada</x-table.th>
                 <x-table.th>Aksi</x-table.th>
             </x-slot:head>
@@ -86,6 +87,7 @@
                         <x-table.td>{{ $member->name }}</x-table.td>
                         <x-table.td>{{ $member->phone }}</x-table.td>
                         <x-table.td>{{ $member->member_code }}</x-table.td>
+                        <x-table.td>{{ $member->point }}</x-table.td>
                         <x-table.td>{{ $member->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
                             <x-table.action-data :detail-action="route('members.show', [$member])"

@@ -42,7 +42,7 @@
                 value="Rp. {{ number_format(session('cash')) }}" />
         @endif
         @if (session('refund'))
-            <x-form.input placeholder="Total Semua" :is-edit="false" value="Rp. {{ number_format(session('refund')) }}" />
+            <x-form.input placeholder="Kembalian" :is-edit="false" value="Rp. {{ number_format(session('refund')) }}" />
         @endif
     </div>
 

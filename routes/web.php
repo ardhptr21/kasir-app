@@ -77,6 +77,7 @@ Route::put('/users/{user}/change-password', [UserController::class, 'changePassw
  *
  *---------------------------------------------**/
 Route::resource('/members', MemberController::class)->middleware(['auth', 'can:admin'])->except(['create', 'edit']);
+Route::post('/members/check', [MemberController::class, 'check'])->middleware(['auth'])->name('members.check');
 
 /**----------------------------------------------
  * Transactions Routes
