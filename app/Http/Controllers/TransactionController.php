@@ -90,12 +90,14 @@ class TransactionController extends Controller
         $transactions = Transaction::insert($carts);
 
         if ($transactions) {
-            if ($member?->point == env('APP_MAX_MEMBER_POINT')) {
-                $member->point = 0;
-                $member->save();
-            } else {
-                $member->point += 1;
-                $member->save();
+            if ($member) {
+                if ($member->point == env('APP_MAX_MEMBER_POINT')) {
+                    $member->point = 0;
+                    $member->save();
+                } else {
+                    $member->point += 1;
+                    $member->save();
+                }
             }
 
             $carts = Cart::truncate();
