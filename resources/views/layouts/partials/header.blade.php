@@ -6,7 +6,7 @@
     <div class="text-center">
         <?php $shop = App\Models\Shop::first(); ?>
         <h5 class="text-lg font-bold uppercase">{{ $shop?->name }}</h5>
-        <p class="text-xs font-medium">{{ $shop?->address }}</p>
+        <p class="text-xs font-medium uppercase">{{ $shop?->address }}</p>
         <p class="text-xs">{{ $shop?->email }} - {{ $shop?->phone }}</p>
     </div>
     <a href="{{ route('auth.logout') }}">

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Service::class)->constrained();
-            $table->string('transaction_code')->unique();
+            $table->string('transaction_code');
             $table->string('period');
             $table->integer('total_price')->default(0);
             $table->integer('quantity');

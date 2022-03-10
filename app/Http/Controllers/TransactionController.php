@@ -131,4 +131,12 @@ class TransactionController extends Controller
 
         return Excel::download(new TransactionsExport($transactions), "$filename.xlsx");
     }
+
+    public function print(Request $request)
+    {
+        $cash = $request->cash ?? 0;
+        $refund = $request->refund ?? 0;
+        $transactions = Transaction::with(['service'])->where('transaction_code', $request->transaction_code)->get();
+        return view('transactions.print', compact('transactions', 'cash', 'refund'));
+    }
 }

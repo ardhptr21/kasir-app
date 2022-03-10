@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Shop;
+
 if (!function_exists('random_alnum')) {
     /**
      * Generate a random alphanumeric string.
@@ -77,5 +79,20 @@ if (!function_exists('sum_all_array_key')) {
         return array_reduce($array, function ($carry, $item) use ($key) {
             return $carry + $item[$key];
         }, 0);
+    }
+}
+
+if (!function_exists('get_shop')) {
+    function get_shop()
+    {
+        return Shop::first();
+    }
+}
+
+if (!function_exists('get_now')) {
+    function get_now()
+    {
+        $date = now()->timestamp;
+        return $date = parse_day(date('N', $date)) . ' ' . date('j', $date) . ' ' . parse_month(date('n', $date)) . ' ' . date('Y', $date) . ', ' . date('H:i', $date);
     }
 }

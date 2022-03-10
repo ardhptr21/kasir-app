@@ -22,8 +22,7 @@
                 <tr>
                     <x-table.td>{{ $loop->iteration }}</x-table.td>
                     <x-table.td>{{ $transaction->service->name }}</x-table.td>
-                    <x-table.td>
-                    </x-table.td>
+                    <x-table.td>{{ $transaction->quantity }}</x-table.td>
                     <x-table.td>Rp. {{ number_format($transaction->service->price) }}</x-table.td>
                     <x-table.td>Rp. {{ number_format($transaction->total_price) }}</x-table.td>
                     <x-table.td>{{ $transaction->user->name }}</x-table.td>
@@ -35,15 +34,18 @@
     <div class="w-full mt-5">
 
         <x-form.input placeholder="Total Semua" :is-edit="false"
-            value="Rp. {{ number_format(array_sum(array_map(fn($v) => $v['total_price'], $transactions->toArray()))) }}" />
+            value="Rp. {{ number_format(sum_all_array_key($transactions->toArray(), 'total_price')) }}" />
 
-        @if (session('cash'))
-            <x-form.input placeholder="Uang Pembayaran" :is-edit="false"
-                value="Rp. {{ number_format(session('cash')) }}" />
-        @endif
-        @if (session('refund'))
-            <x-form.input placeholder="Kembalian" :is-edit="false" value="Rp. {{ number_format(session('refund')) }}" />
-        @endif
+        <x-form.input placeholder="Uang Pembayaran" :is-edit="false" value="Rp. {{ number_format(session('cash')) }}" />
+        <x-form.input placeholder="Kembalian" :is-edit="false" value="Rp. {{ number_format(session('refund')) }}" />
+
+        <form action="{{ route('transactions.print') }}" class="mt-5" method="POST" target="_blank">
+            @csrf
+            <input type="hidden" name="cash" value="{{ session('cash') }}">
+            <input type="hidden" name="refund" value="{{ session('refund') }}">
+            <input type="hidden" name="transaction_code" value="{{ $transactions[0]->transaction_code }}">
+            <x-button.primary type="submit">Cetak Pembayaran</x-button.primary>
+        </form>
     </div>
 
     <div class="mt-5">
