@@ -32,7 +32,7 @@ class ShopController extends Controller
         }
 
         if ($shop) {
-            return to_route('shop:index')->with('shop_success', 'Toko berhasil diubah');
+            return to_route('shop.index')->with('shop_success', 'Toko berhasil diubah');
         }
 
         return back()->with('shop_error', 'Toko gagal diubah');
