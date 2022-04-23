@@ -17,6 +17,7 @@
                 <p class="font-medium uppercase">{{ get_shop()?->address }}</p>
                 <p>{{ get_shop()?->email }} - {{ get_shop()?->phone }}</p>
             </div>
+            <h5 class="font-bold">{{ $transactions[0]->created_at->format('d-m-Y h:i:s') }}</h5>
         </div>
 
         <div class="w-full lg:w-3/4">
@@ -42,13 +43,13 @@
             </x-table.container>
 
             <div class="w-full mt-5">
+                <x-form.input placeholder="Tipe" :is-edit="false" value="{{ $type }}" />
+                <x-form.input placeholder="Merk" :is-edit="false" value="{{ $merk }}" />
+                <x-form.input placeholder="Plate" :is-edit="false" value="{{ $plate }}" />
                 <x-form.input placeholder="Total Semua" :is-edit="false"
                     value="Rp. {{ number_format(sum_all_array_key($transactions->toArray(), 'total_price')) }}" />
-
                 <x-form.input placeholder="Pembayaran" :is-edit="false" value="Rp. {{ number_format($cash) }}" />
-
                 <x-form.input placeholder="Kembalian" :is-edit="false" value="Rp. {{ number_format($refund) }}" />
-
                 <x-form.input placeholder="Kasir" :is-edit="false" value="{{ auth()->user()->name }}" />
             </div>
         </div>

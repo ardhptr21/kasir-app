@@ -64,6 +64,9 @@ class TransactionController extends Controller
             'total_all' => 'required|integer|min:0',
             'cash' => "required|integer|min:$request->total_all",
             'member' => 'string|nullable',
+            'type' => 'required|string|in:small,medium,large',
+            'merk' => 'required|string',
+            'plate' => 'required|string',
         ]);
 
         $member = null;
@@ -75,10 +78,13 @@ class TransactionController extends Controller
         }
 
         $merger = ['transaction_code' => random_alnum(8), 'period' => date('m-Y'), 'user_id' => auth()->user()->id];
-        $carts = array_map(function ($v) use ($merger, $member) {
+        $carts = array_map(function ($v) use ($merger, $member, $validated) {
             unset($v['id']);
             $v['created_at'] = now();
             $v['updated_at'] = now();
+            $v['merk'] = $validated['merk'];
+            $v['plate'] = $validated['plate'];
+            $v['type'] = $validated['type'];
 
             if ($member?->point == env('APP_MAX_MEMBER_POINT')) {
                 $v['total_price'] = 0;
@@ -107,6 +113,9 @@ class TransactionController extends Controller
                 'total_all' => $validated['total_all'],
                 'refund' => $validated['cash'] - $validated['total_all'],
                 'transaction_code' => $merger['transaction_code'],
+                'type' => $validated['type'],
+                'merk' => $validated['merk'],
+                'plate' => $validated['plate'],
             ]);
         }
 
@@ -136,7 +145,10 @@ class TransactionController extends Controller
     {
         $cash = $request->cash ?? 0;
         $refund = $request->refund ?? 0;
+        $type = $request->type ?? 'small';
+        $merk = $request->merk ?? '-';
+        $plate = $request->plate ?? '-';
         $transactions = Transaction::with(['service'])->where('transaction_code', $request->transaction_code)->get();
-        return view('transactions.print', compact('transactions', 'cash', 'refund'));
+        return view('transactions.print', compact('transactions', 'cash', 'refund', 'merk', 'plate', 'type'));
     }
 }

@@ -7,7 +7,7 @@
         <div class="flex gap-5">
             <div class="w-full">
                 <h2 class="mb-3 text-lg font-bold">Laporan Per Hari</h2>
-                <div class="flex items-center justify-center w-full gap-3" x-init="date = now()" x-data="{date: null}">
+                <div class="flex items-center justify-center w-full gap-3" x-init="date = now()" x-data="{ date: null }">
                     <x-form.input type="date" placeholder="Cari berdasarkan hari" ::value="date"
                         @change="date = $el.value" />
                     <x-button.primary class="w-48"
@@ -90,6 +90,9 @@
             <x-slot:head>
                 <x-table.th>No</x-table.th>
                 <x-table.th>Nama Service</x-table.th>
+                <x-table.th>Tipe Kendaraan</x-table.th>
+                <x-table.th>Merk Kendaraan</x-table.th>
+                <x-table.th>Plat Nomer Kendaraan</x-table.th>
                 <x-table.th>Kode Transaksi</x-table.th>
                 <x-table.th>Jumlah</x-table.th>
                 <x-table.th>Total Harga</x-table.th>
@@ -100,6 +103,9 @@
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
                         <x-table.td>{{ $transaction->service->name }}</x-table.td>
+                        <x-table.td>{{ $transaction->type }}</x-table.td>
+                        <x-table.td>{{ $transaction->merk }}</x-table.td>
+                        <x-table.td>{{ $transaction->plate }}</x-table.td>
                         <x-table.td>{{ $transaction->transaction_code }}</x-table.td>
                         <x-table.td>{{ $transaction->quantity }}</x-table.td>
                         <x-table.td>Rp. {{ number_format($transaction->total_price) }}</x-table.td>

@@ -33,9 +33,12 @@
 
     <div class="w-full mt-5">
 
+        <x-form.input placeholder="Tipe" :is-edit="false" value="{{ session('type') }}" />
+        <x-form.input placeholder="Merk" :is-edit="false" value="{{ session('merk') }}" />
+        <x-form.input placeholder="Plat" :is-edit="false" value="{{ session('plate') }}" />
+
         <x-form.input placeholder="Total Semua" :is-edit="false"
             value="Rp. {{ number_format(sum_all_array_key($transactions->toArray(), 'total_price')) }}" />
-
         <x-form.input placeholder="Uang Pembayaran" :is-edit="false" value="Rp. {{ number_format(session('cash')) }}" />
         <x-form.input placeholder="Kembalian" :is-edit="false" value="Rp. {{ number_format(session('refund')) }}" />
 
@@ -43,6 +46,9 @@
             @csrf
             <input type="hidden" name="cash" value="{{ session('cash') }}">
             <input type="hidden" name="refund" value="{{ session('refund') }}">
+            <input type="hidden" name="type" value="{{ session('type') }}">
+            <input type="hidden" name="merk" value="{{ session('merk') }}">
+            <input type="hidden" name="plate" value="{{ session('plate') }}">
             <input type="hidden" name="transaction_code" value="{{ $transactions[0]->transaction_code }}">
             <x-button.primary type="submit">Cetak Pembayaran</x-button.primary>
         </form>

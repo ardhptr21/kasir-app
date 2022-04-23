@@ -9,8 +9,7 @@
         <x-alert.error closeable>{{ session('cart_error') }}</x-alert.error>
     @endif
 
-    <div class="flex flex-row justify-between w-full gap-3 p-5 my-5 bg-white rounded-md shadow-md"
-        x-data="{services: [], loading: false}">
+    <div class="flex flex-row justify-between w-full gap-3 p-5 my-5 bg-white rounded-md shadow-md" x-data="{ services: [], loading: false }">
         <div class="w-96">
             <h2 class="mb-3 text-xl font-bold">Pencarian</h2>
             <x-form.input name="service" placeholder="Cari service"
@@ -81,7 +80,7 @@
             </x-slot:head>
             <x-slot:body>
                 @foreach ($carts as $cart)
-                    <tr x-data="{quantity: {{ $cart->quantity }}}">
+                    <tr x-data="{ quantity: {{ $cart->quantity }} }">
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
                         <x-table.td>{{ $cart->service->name }}</x-table.td>
                         <x-table.td>
@@ -146,17 +145,30 @@
                 <form class="flex items-center justify-center w-full gap-3" action="{{ route('transactions.store') }}"
                     method="POST">
                     @csrf
-                    <x-form.input name="cash" placeholder="Uang Pembayaran" type="number" required
-                        min="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT')? 0: sum_all_array_key($carts->toArray(), 'total_price') }}"
-                        value="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT') ? 0 : null }}"
-                        :readonly="$member?->point == (int) env('APP_MAX_MEMBER_POINT')" />
                     <input type="hidden" name="total_all"
                         value="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT')? 0: sum_all_array_key($carts->toArray(), 'total_price') }}">
                     @if ($member)
                         <input type="hidden" name="member" value="{{ $member->member_code }}">
                     @endif
-                    <x-button.primary class="w-64" type="submit"><i class="fa-solid fa-coins"></i> Bayar
-                    </x-button.primary>
+                    <div class="w-full space-y-3">
+                        <div class="flex flex-col items-center justify-center gap-3">
+                            <x-form.select placeholder="Tipe Kendaraan" name="type" required>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </x-form.select>
+                            <div class="w-full columns-2">
+                                <x-form.input name="merk" placeholder="Merk Kendaraan" required />
+                                <x-form.input name="plate" placeholder="Plat Nomor Kendaraan" required />
+                            </div>
+                            <x-form.input name="cash" placeholder="Uang Pembayaran" type="number" required
+                                min="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT')? 0: sum_all_array_key($carts->toArray(), 'total_price') }}"
+                                value="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT') ? 0 : null }}"
+                                :readonly="$member?->point == (int) env('APP_MAX_MEMBER_POINT')" />
+                        </div>
+                        <x-button.primary class="w-full" type="submit"><i class="fa-solid fa-coins"></i> Bayar
+                        </x-button.primary>
+                    </div>
                 </form>
 
                 @if ($member?->point == env('APP_MAX_MEMBER_POINT'))

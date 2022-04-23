@@ -19,6 +19,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Service::class)->constrained()->onDelete('cascade');
+            $table->enum('type', ['small', 'medium', 'large']);
+            $table->string('merk');
+            $table->string('plate');
             $table->string('transaction_code');
             $table->string('period');
             $table->integer('total_price')->default(0);
