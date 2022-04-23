@@ -39,4 +39,9 @@ class Service extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function free_service()
+    {
+        return $this->hasOne(FreeService::class);
+    }
 }

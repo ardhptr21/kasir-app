@@ -9,6 +9,7 @@ if (env('APP_ENV') === 'production') {
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FreeServiceController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ServiceController;
@@ -47,6 +48,14 @@ Route::controller(PagesController::class)->middleware('auth')->group(function ()
  *
  *---------------------------------------------**/
 Route::resource('/services', ServiceController::class)->middleware(['auth'])->except(['show', 'create']);
+
+/**----------------------------------------------
+ * Free Service Routes
+ * Base Route: /free-services
+ * Description: Routes for the free service
+ *
+ *---------------------------------------------**/
+Route::resource('/free-services', FreeServiceController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create', 'edit', 'update']);
 
 /**----------------------------------------------
  * Shop Routes

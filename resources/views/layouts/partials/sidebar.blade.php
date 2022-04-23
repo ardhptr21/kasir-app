@@ -6,9 +6,11 @@
 
     @can('admin')
         <x-side-bar.dropdown-container name="Data" icon="fa-solid fa-database">
-            <x-side-bar.item name="Member" icon="fa-solid fa-user-check" link="{{ route('members.index') }}" rounded />
-            <x-side-bar.item name="Service" icon="fa-solid fa-bell-concierge" link="{{ route('services.index') }}"
+            <x-side-bar.item name="Members" icon="fa-solid fa-user-check" link="{{ route('members.index') }}" rounded />
+            <x-side-bar.item name="Services" icon="fa-solid fa-bell-concierge" link="{{ route('services.index') }}"
                 rounded />
+            <x-side-bar.item name="Free Service" icon="fa-solid fa-bell-concierge"
+                link="{{ route('free-services.index') }}" rounded />
             <x-side-bar.item name="Kategori" icon="fa-solid fa-cubes" link="{{ route('categories.index') }}" rounded />
         </x-side-bar.dropdown-container>
     @endcan
