@@ -16,6 +16,9 @@ class ServiceController extends Controller
         if ($request->get('type') == 'json') {
             return response()->json($services);
         }
+        if (!auth()->user()->isAdmin() && !auth()->user()->isOwner()) {
+            abort(403);
+        }
         return view('services.index', compact('categories', 'services'));
     }
 
