@@ -138,7 +138,7 @@
                                     <x-table.td>{{ $cart->service->free_service?->max_point }}</x-table.td>
                                     <x-table.td>
                                         <div class="flex gap-2">
-                                            <form class="flex justify-center items-center gap-3" method="POST"
+                                            <form class="flex items-center justify-center gap-3" method="POST"
                                                 action="{{ route('free-service-carts.destroy', $cart->service->free_service->free_service_cart) }}">
                                                 @method('DELETE')
                                                 @csrf
@@ -156,7 +156,7 @@
                                     <x-table.td>{{ $cart->service->free_service?->max_point }}</x-table.td>
                                     <x-table.td>
                                         <div class="flex gap-2">
-                                            <form class="flex justify-center items-center gap-3" method="POST"
+                                            <form class="flex items-center justify-center gap-3" method="POST"
                                                 action="{{ route('free-service-carts.store', ['free_service_id' => $cart->service->free_service->id]) }}">
                                                 @csrf
                                                 <input type="hidden" name="free_service_id"
@@ -206,6 +206,7 @@
                     @endif
                     <div class="w-full space-y-3">
                         <div class="flex flex-col items-center justify-center gap-3">
+                            <x-form.input name="note_number" placeholder="Nomer Nota" required />
                             <x-form.select placeholder="Tipe Kendaraan" name="type" required>
                                 <option value="small">Small</option>
                                 <option value="medium">Medium</option>

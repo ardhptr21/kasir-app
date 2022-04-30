@@ -33,6 +33,7 @@
 
     <div class="w-full mt-5">
 
+        <x-form.input placeholder="Nomer Nota" :is-edit="false" value="{{ session('note_number') }}" />
         <x-form.input placeholder="Tipe" :is-edit="false" value="{{ session('type') }}" />
         <x-form.input placeholder="Merk" :is-edit="false" value="{{ session('merk') }}" />
         <x-form.input placeholder="Plat" :is-edit="false" value="{{ session('plate') }}" />
@@ -44,6 +45,7 @@
 
         <form action="{{ route('transactions.print') }}" class="mt-5" method="POST" target="_blank">
             @csrf
+            <input type="hidden" name="note_number" value="{{ session('note_number') }}">
             <input type="hidden" name="cash" value="{{ session('cash') }}">
             <input type="hidden" name="refund" value="{{ session('refund') }}">
             <input type="hidden" name="type" value="{{ session('type') }}">

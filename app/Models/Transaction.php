@@ -14,6 +14,7 @@ class Transaction extends Model
         'user_id',
         'service_id',
         'total_price',
+        'note_number',
         'quantity',
         'period',
         'transaction_code'

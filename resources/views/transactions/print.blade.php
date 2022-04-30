@@ -43,6 +43,7 @@
             </x-table.container>
 
             <div class="w-full mt-5">
+                <x-form.input placeholder="Nomer Nota" :is-edit="false" value="{{ $note_number }}" />
                 <x-form.input placeholder="Tipe" :is-edit="false" value="{{ $type }}" />
                 <x-form.input placeholder="Merk" :is-edit="false" value="{{ $merk }}" />
                 <x-form.input placeholder="Plate" :is-edit="false" value="{{ $plate }}" />

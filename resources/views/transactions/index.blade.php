@@ -90,6 +90,7 @@
             <x-slot:head>
                 <x-table.th>No</x-table.th>
                 <x-table.th>Nama Service</x-table.th>
+                <x-table.th>Nomer Nota</x-table.th>
                 <x-table.th>Tipe Kendaraan</x-table.th>
                 <x-table.th>Merk Kendaraan</x-table.th>
                 <x-table.th>Plat Nomer Kendaraan</x-table.th>
@@ -103,6 +104,7 @@
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
                         <x-table.td>{{ $transaction->service->name }}</x-table.td>
+                        <x-table.td>{{ $transaction->note_number }}</x-table.td>
                         <x-table.td>{{ $transaction->type }}</x-table.td>
                         <x-table.td>{{ $transaction->merk }}</x-table.td>
                         <x-table.td>{{ $transaction->plate }}</x-table.td>

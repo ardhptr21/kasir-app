@@ -64,6 +64,7 @@ class TransactionController extends Controller
             'total_all' => 'required|integer|min:0',
             'cash' => "required|integer|min:$request->total_all",
             'member' => 'string|nullable',
+            'note_number' => 'string|required',
             'type' => 'required|string|in:small,medium,large',
             'merk' => 'required|string',
             'plate' => 'required|string',
@@ -85,6 +86,7 @@ class TransactionController extends Controller
             $v['merk'] = $validated['merk'];
             $v['plate'] = $validated['plate'];
             $v['type'] = $validated['type'];
+            $v['note_number'] = $validated['note_number'];
 
             if ($v['service']['free_service']) {
                 if ($v['service']['free_service']['free_service_cart']) {
@@ -121,6 +123,7 @@ class TransactionController extends Controller
                 'type' => $validated['type'],
                 'merk' => $validated['merk'],
                 'plate' => $validated['plate'],
+                'note_number' => $validated['note_number'],
             ]);
         }
 
@@ -153,7 +156,8 @@ class TransactionController extends Controller
         $type = $request->type ?? 'small';
         $merk = $request->merk ?? '-';
         $plate = $request->plate ?? '-';
+        $note_number = $request->note_number ?? '-';
         $transactions = Transaction::with(['service'])->where('transaction_code', $request->transaction_code)->get();
-        return view('transactions.print', compact('transactions', 'cash', 'refund', 'merk', 'plate', 'type'));
+        return view('transactions.print', compact('transactions', 'cash', 'refund', 'merk', 'plate', 'type', 'note_number'));
     }
 }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('merk');
             $table->string('plate');
             $table->string('transaction_code');
+            $table->string('note_number');
             $table->string('period');
             $table->integer('total_price')->default(0);
             $table->integer('quantity');
