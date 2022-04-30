@@ -16,4 +16,9 @@ class FreeService extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
+    public function free_service_cart()
+    {
+        return $this->hasOne(FreeServiceCart::class);
+    }
 }

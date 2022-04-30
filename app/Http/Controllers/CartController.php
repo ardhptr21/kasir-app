@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\FreeServiceCart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -53,9 +54,10 @@ class CartController extends Controller
 
     public function truncate()
     {
-        $truncated = Cart::truncate();
+        $cart_truncated = Cart::truncate();
+        $free_service_card_truncated = FreeServiceCart::truncate();
 
-        if ($truncated) {
+        if ($cart_truncated && $free_service_card_truncated) {
             return back()->with('cart_success', 'Berhasil mengosongkan keranjang');
         }
 

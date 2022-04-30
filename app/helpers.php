@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\FreeServiceCart;
 use App\Models\Shop;
 
 if (!function_exists('random_alnum')) {
@@ -94,5 +95,31 @@ if (!function_exists('get_now')) {
     {
         $date = now()->timestamp;
         return $date = parse_day(date('N', $date)) . ' ' . date('j', $date) . ' ' . parse_month(date('n', $date)) . ' ' . date('Y', $date) . ', ' . date('H:i', $date);
+    }
+}
+
+if (!function_exists('count_point_in_cart_service')) {
+    function count_point_in_cart_service()
+    {
+        $total_point = 0;
+        $free_service_carts = FreeServiceCart::with(['free_service'])->get();
+        foreach ($free_service_carts as $free_service_cart) {
+            $total_point += $free_service_cart->free_service->max_point;
+        }
+        return $total_point;
+    }
+}
+
+if (!function_exists('total_price')) {
+    function total_price($carts)
+    {
+        $total_price = 0;
+
+        foreach ($carts as $cart) {
+            if (!$cart->service?->free_service?->free_service_cart) {
+                $total_price += $cart['service']['price'] * $cart['quantity'];
+            }
+        }
+        return $total_price;
     }
 }

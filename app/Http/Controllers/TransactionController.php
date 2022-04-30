@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Exports\TransactionsExport;
 use App\Models\Cart;
+use App\Models\FreeService;
+use App\Models\FreeServiceCart;
 use App\Models\Member;
 use App\Models\Transaction;
 use DateTime;
-use DateTimeZone;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 
 class TransactionController extends Controller
 {
@@ -35,7 +35,7 @@ class TransactionController extends Controller
 
     public function create(Request $request)
     {
-        $carts = Cart::with(['service', 'user'])->get();
+        $carts = Cart::with(['user', 'service.free_service'])->get();
         $member = null;
         if ($request->member) {
             $member = Member::where('member_code', $request->member)->first();
@@ -78,7 +78,7 @@ class TransactionController extends Controller
         }
 
         $merger = ['transaction_code' => random_alnum(8), 'period' => date('m-Y'), 'user_id' => auth()->user()->id];
-        $carts = array_map(function ($v) use ($merger, $member, $validated) {
+        $carts = array_map(function ($v) use ($merger, $validated) {
             unset($v['id']);
             $v['created_at'] = now();
             $v['updated_at'] = now();
@@ -86,27 +86,32 @@ class TransactionController extends Controller
             $v['plate'] = $validated['plate'];
             $v['type'] = $validated['type'];
 
-            if ($member?->point == env('APP_MAX_MEMBER_POINT')) {
-                $v['total_price'] = 0;
+            if ($v['service']['free_service']) {
+                if ($v['service']['free_service']['free_service_cart']) {
+                    $v['total_price'] = 0;
+                }
             }
 
+            unset($v['service']);
+
             return array_merge($v, $merger);
-        }, Cart::all()->toArray());
+        }, Cart::with(['service.free_service.free_service_cart'])->get()->toArray());
 
         $transactions = Transaction::insert($carts);
 
         if ($transactions) {
+            $total_point_substraction = array_reduce(FreeServiceCart::with(['free_service'])->get()->toArray(), fn ($prev, $curr) => $prev + $curr['free_service']['max_point'], 0);
             if ($member) {
-                if ($member->point == env('APP_MAX_MEMBER_POINT')) {
-                    $member->point = 0;
-                    $member->save();
-                } else {
-                    $member->point += 1;
-                    $member->save();
+                if ($member->point >= $total_point_substraction) {
+                    $member->point -= $total_point_substraction;
                 }
+                $member->point += 1;
+                $member->save();
             }
 
-            $carts = Cart::truncate();
+            Cart::truncate();
+            FreeServiceCart::truncate();
+
             return to_route('transactions.show')->with([
                 'message' => 'Transaksi berhasil dilakukan',
                 'cash' => $validated['cash'],

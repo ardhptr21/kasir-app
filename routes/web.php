@@ -9,6 +9,7 @@ if (env('APP_ENV') === 'production') {
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FreeServiceCartController;
 use App\Http\Controllers\FreeServiceController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PagesController;
@@ -55,7 +56,18 @@ Route::resource('/services', ServiceController::class)->middleware(['auth'])->ex
  * Description: Routes for the free service
  *
  *---------------------------------------------**/
-Route::resource('/free-services', FreeServiceController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create', 'edit', 'update']);
+Route::resource('/free-services', FreeServiceController::class)->middleware(['auth'])->except(['show', 'create', 'edit', 'update']);
+
+/**----------------------------------------------
+ * Free Service Routes
+ * Base Route: /free-services
+ * Description: Routes for the free service
+ *
+ *---------------------------------------------**/
+Route::controller(FreeServiceCartController::class)->prefix('/free-service-carts')->middleware(['auth'])->group(function () {
+    Route::post('/', 'store')->name('free-service-carts.store');
+    Route::delete('/{free_service_cart}', 'destroy')->name('free-service-carts.destroy');
+});
 
 /**----------------------------------------------
  * Shop Routes
